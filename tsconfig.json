@@ -1,24 +1,27 @@
 {
-	"compilerOptions": {
-		"outDir": "./dist/",
-		"noImplicitAny": true,
-		"module": "ESNext",
-		"target": "es5",
-		"jsx": "react-jsx",
-		"allowJs": true,
-		"moduleResolution": "node",
-		"baseUrl": ".",
-		"paths": {
-			"*": ["./src/*"]
-		},
-		// Позволяет использовать импорты
-		"esModuleInterop": true,
-		// Позволяет использовать дефолтные импорты без *
-		"allowSyntheticDefaultImports": true
-	},
-	"ts-node": {
-		"compilerOptions": {
-			"module": "CommonJS"
-		}
-	}
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "ESNext",
+    "target": "es2015",
+    "strict": true,
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["./src/*"]
+    },
+    // Позволяет использовать импорты
+    "esModuleInterop": true,
+    // Позволяет использовать дефолтные импорты без *
+    "allowSyntheticDefaultImports": true
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
+  "include": ["./config/jest/setupTests.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }
