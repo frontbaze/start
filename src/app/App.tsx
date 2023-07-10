@@ -1,4 +1,3 @@
-// eslint-disable i18next/no-literal-string
 import './styles/index.scss';
 import { useTheme } from 'app/providers/ThemeProvider';
 import { classNames } from 'shared/lib/classNames/classNames';
