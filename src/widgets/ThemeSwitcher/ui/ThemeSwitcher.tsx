@@ -13,10 +13,11 @@ export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
   return (
     <Button
       theme={ThemeButton.CLEAR}
-      className={classNames('', {}, [className])}
+      className={classNames('', {}, [className as string])}
       onClick={toggleThemeHandler}
     >
       {theme === Theme.LIGHT ? (
+        // eslint-disable-next-line i18next/no-literal-string
         <DarkIcon width={20} height={20} fill="#D8D8D8" />
       ) : (
         <LightIcon width={20} height={20} />
