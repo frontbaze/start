@@ -1,11 +1,12 @@
 {
   "Тестовый перевод": "Test example",
   "Перевод": "Translate",
-  "Язык": "ENG",
+  "Язык": "English",
   "Страница не найдена": "Page not found",
   "Произошла непредвиденная ошибка": "Unexpected error happens",
   "Обновить сраницу": "Refresh the page",
   "Переключить": "Toggle",
   "Главная": "Main",
-  "О сайте": "About"
+  "О сайте": "About",
+  "Короткий язык": "En"
 }
