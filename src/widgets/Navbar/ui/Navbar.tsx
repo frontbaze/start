@@ -1,7 +1,9 @@
+/* eslint-disable i18next/no-literal-string */
 import { classNames } from 'shared/lib/classNames/classNames';
-import { AppLink, AppLinkTheme } from 'shared/ui/AppLink/AppLink';
-import { ThemeSwitcher } from 'widgets/ThemeSwitcher';
 import { useTranslation } from 'react-i18next';
+import Modal from 'shared/ui/Modal/Modal';
+import Button, { ThemeButton } from 'shared/ui/Button/Button';
+import { useCallback, useState } from 'react';
 import cls from './Navbar.module.scss';
 
 interface NavbarProps {
@@ -9,12 +11,27 @@ interface NavbarProps {
 }
 
 export const Navbar = ({ className }: NavbarProps) => {
+  const [isAuthModal, setIsAuthModal] = useState(false);
   const { t } = useTranslation();
+
+  const toggleModalHandler = useCallback(() => {
+    setIsAuthModal((prev) => !prev);
+  }, []);
   return (
     <div className={classNames(cls.Navbar, {}, [className as string])}>
-      <div className={cls.links}>
-        /
-      </div>
+      <Button
+        theme={ThemeButton.CLEAR_INVERTED}
+        className={cls.links}
+        onClick={toggleModalHandler}
+      >
+        {t('Войти')}
+      </Button>
+      <Modal isOpen={isAuthModal} onClose={toggleModalHandler}>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus
+        nemo consectetur alias odio molestias laborum, explicabo corporis,
+        ratione nisi sequi soluta enim minus impedit velit. Tempora asperiores
+        nihil sint magni!
+      </Modal>
     </div>
   );
 };
