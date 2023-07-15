@@ -1,15 +1,18 @@
-import React, { FC } from 'react';
-import { BugButton } from 'app/providers/ErrorBoundary';
+/* eslint-disable i18next/no-literal-string */
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Counter } from 'entities/Counter';
+import Input from 'shared/ui/Input/Input';
 
 const MainPage: FC = () => {
   const { t } = useTranslation('main');
+  const [value, setValue] = useState('');
+  const onChange = (val: string) => {
+    setValue(val);
+  };
   return (
     <div>
-      <BugButton />
       {t('Главная страница')}
-      <Counter />
+      <Input value={value} onChange={onChange} placeholder="Enter" />
     </div>
   );
 };
