@@ -10,17 +10,18 @@ export default ({ config }: { config: webpack.Configuration }) => {
     entry: '',
     src: path.resolve(__dirname, '..', '..', 'src'),
   };
-  config.resolve?.modules?.push(paths.src);
-  config.resolve?.extensions?.push('.ts', '.tsx');
+  config.resolve!.modules!.push(paths.src);
+  config.resolve!.extensions!.push('.ts', '.tsx');
 
   if (!config.module) {
     throw new Error('config module undefined');
   } else {
     // eslint-disable-next-line no-param-reassign, prefer-arrow-callback, func-names
-    config.module.rules = config.module?.rules?.map(
-      (rule: RuleSetRule | '...') => {
+    config.module.rules = config.module!.rules!.map(
+      // @ts-ignore
+      (rule: RuleSetRule) => {
         if (typeof rule !== 'string' && /svg/.test(rule.test as string)) {
-          return { ...(rule as object), exclude: /\.svg$/i };
+          return { ...rule, exclude: /\.svg$/i };
         }
 
         return rule;
@@ -28,15 +29,16 @@ export default ({ config }: { config: webpack.Configuration }) => {
     );
   }
 
-  config.module.rules?.push({
+  config.module.rules!.push({
     test: /\.svg$/,
     use: ['@svgr/webpack'],
   });
-  config.module.rules?.push(buildCssLoader(true));
+  config.module.rules!.push(buildCssLoader(true));
 
   config.plugins?.push(
     new DefinePlugin({
-      __IS_DEV__: true,
+      __IS_DEV__: JSON.stringify(true),
+      __API__: JSON.stringify(''),
     }),
   );
 

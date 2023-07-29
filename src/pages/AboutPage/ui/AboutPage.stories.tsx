@@ -15,9 +15,9 @@ export default {
   },
 } as ComponentMeta<typeof AboutPage>;
 
-const Template: ComponentStory<typeof AboutPage> = (args) => (
+const Template: ComponentStory<typeof AboutPage> = () => (
   // eslint-disable-next-line react/jsx-props-no-spreading
-  <AboutPage {...args} />
+  <AboutPage />
 );
 
 export const Light = Template.bind({});

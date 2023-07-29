@@ -1,11 +1,9 @@
-import { DeepPartial } from '@reduxjs/toolkit';
 import { StateSchema } from 'app/providers/StoreProvider';
 import { getLoginUsername } from './getLoginUsername';
 
 describe('getLoginUsername.test', () => {
   test('should return value', () => {
     const state: DeepPartial<StateSchema> = {
-      // @ts-ignore
       loginForm: {
         username: 'admin',
       },

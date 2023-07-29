@@ -74,6 +74,7 @@ export const Input = memo((props: InputProps) => {
           onFocus={onFocus}
           onBlur={onBlur}
           onSelect={onSelect}
+          // eslint-disable-next-line react/jsx-props-no-spreading
           {...otherProps}
         />
         {isFocused && (
