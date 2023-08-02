@@ -1,4 +1,7 @@
-import { classNames } from 'shared/lib/classNames/classNames';
+import {
+  Mods,
+  classNames,
+} from 'shared/lib/classNames/classNames';
 import {
   ChangeEvent,
   InputHTMLAttributes,
@@ -11,14 +14,15 @@ import cls from './Input.module.scss';
 
 type HTMLInputProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  'value' | 'onChange'
+  'value' | 'onChange' | 'readOnly'
 >;
 
 interface InputProps extends HTMLInputProps {
   className?: string;
-  value?: string;
+  value?: string | number;
   onChange?: (value: string) => void;
   autofocus?: boolean;
+  readonly?: boolean;
 }
 
 export const Input = memo((props: InputProps) => {
@@ -29,12 +33,15 @@ export const Input = memo((props: InputProps) => {
     type = 'text',
     placeholder,
     autofocus,
+    readonly,
     ...otherProps
   } = props;
 
   const [isFocused, setIsFocused] = useState(false);
   const [dashPosition, setDashPosition] = useState(0);
   const dashRef = useRef<HTMLInputElement>(null);
+
+  const isDashVisible = isFocused && !readonly;
 
   useEffect(() => {
     if (autofocus) {
@@ -55,14 +62,26 @@ export const Input = memo((props: InputProps) => {
     setDashPosition(e?.target?.selectionStart || 0);
   };
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const mods: Mods = {
+    [cls.readonly]: readonly,
+  };
+
+  const onChangeHandler = (
+    e: ChangeEvent<HTMLInputElement>,
+  ) => {
     onChange?.(e.target.value);
     setDashPosition(e.target.value.length);
   };
   return (
-    <div className={classNames(cls.InputWrapper, {}, [className!])}>
+    <div
+      className={classNames(cls.InputWrapper, {}, [
+        className!,
+      ])}
+    >
       {placeholder && (
-        <div className={cls.placeholder}>{`${placeholder}>`}</div>
+        <div className={cls.placeholder}>
+          {`${placeholder}>`}
+        </div>
       )}
       <div className={cls.dashWrapper}>
         <input
@@ -74,10 +93,11 @@ export const Input = memo((props: InputProps) => {
           onFocus={onFocus}
           onBlur={onBlur}
           onSelect={onSelect}
+          readOnly={readonly}
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...otherProps}
         />
-        {isFocused && (
+        {isDashVisible && (
           <span
             style={{ left: `${dashPosition * 9}px` }}
             className={cls.dash}
