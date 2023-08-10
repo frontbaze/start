@@ -1,32 +1,31 @@
-/* eslint-disable i18next/no-literal-string */
-import { useTheme } from 'app/providers/ThemeProvider';
+import React, { Suspense, useEffect } from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
+import { useTheme } from 'app/providers/ThemeProvider';
+import { AppRouter } from 'app/providers/router';
 import { Navbar } from 'widgets/Navbar';
 import { Sidebar } from 'widgets/Sidebar';
-import { Suspense, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { userActions } from 'entities/User';
-import { AppRouter } from './providers/router';
 
-const App = () => {
-  const { theme } = useTheme();
-  const dispatch = useDispatch();
+function App() {
+    const { theme } = useTheme();
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(userActions.initAuthData());
-  }, [dispatch]);
+    useEffect(() => {
+        dispatch(userActions.initAuthData());
+    }, [dispatch]);
 
-  return (
-    <div className={classNames('app', {}, [theme as string])}>
-      <Suspense fallback="">
-        <Navbar />
-        <div className="content-page">
-          <Sidebar />
-          <AppRouter />
+    return (
+        <div className={classNames('app', {}, [theme])}>
+            <Suspense fallback="">
+                <Navbar />
+                <div className="content-page">
+                    <Sidebar />
+                    <AppRouter />
+                </div>
+            </Suspense>
         </div>
-      </Suspense>
-    </div>
-  );
-};
+    );
+}
 
 export default App;

@@ -1,45 +1,33 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-
+import React from 'react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { StoreDecorator } from 'shared/config/storybook/StoreDecorator/StoreDecorator';
+import { PreloadedState } from '@reduxjs/toolkit';
 import LoginForm from './LoginForm';
 
 export default {
-  title: 'features/LoginForm',
-  component: LoginForm,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+    title: 'features/LoginForm',
+    component: LoginForm,
+    argTypes: {
+        backgroundColor: { control: 'color' },
+    },
 } as ComponentMeta<typeof LoginForm>;
 
-// eslint-disable-next-line react/jsx-props-no-spreading
-const Template: ComponentStory<typeof LoginForm> = (args) => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  <LoginForm {...args} />
-);
+const Template: ComponentStory<typeof LoginForm> = (args) => <LoginForm {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {};
-Primary.decorators = [
-  StoreDecorator({
-    // @ts-ignore
-    loginForm: { username: 'asd', password: '123' },
-  }),
-];
+Primary.decorators = [StoreDecorator({
+    loginForm: { username: '123', password: 'asd' },
+})];
 
-export const WithError = Template.bind({});
-WithError.args = {};
-WithError.decorators = [
-  StoreDecorator({
-    // @ts-ignore
-    loginForm: { username: 'asd', password: '123', error: 'ERROR' },
-  }),
-];
+export const withError = Template.bind({});
+withError.args = {};
+withError.decorators = [StoreDecorator({
+    loginForm: { username: '123', password: 'asd', error: 'ERROR' },
+})];
 
 export const Loading = Template.bind({});
 Loading.args = {};
-Loading.decorators = [
-  StoreDecorator({
-    // @ts-ignore
+Loading.decorators = [StoreDecorator({
     loginForm: { isLoading: true },
-  }),
-];
+})];
