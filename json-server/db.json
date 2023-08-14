@@ -107,13 +107,15 @@
             "id": "1",
             "username": "admin",
             "password": "123",
-            "role": "ADMIN"
+            "role": "ADMIN",
+            "avatar": "https://e7.pngegg.com/pngimages/188/202/png-clipart-portrait-of-man-illustration-human-behavior-head-ear-eye-vision-care-tv-smith-television-face.png"
         },
         {
             "id": "2",
             "username": "user",
             "password": "123",
-            "role": "USER"
+            "role": "USER",
+            "avatar": "https://e7.pngegg.com/pngimages/188/202/png-clipart-portrait-of-man-illustration-human-behavior-head-ear-eye-vision-care-tv-smith-television-face.png"
         }
     ],
     "profile": {
