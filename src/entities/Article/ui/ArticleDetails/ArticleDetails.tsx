@@ -18,6 +18,7 @@ import { Avatar } from 'shared/ui/Avatar/Avatar';
 import ViewIcon from 'shared/assets/icons/views.svg';
 import DateIcon from 'shared/assets/icons/date.svg';
 import Icon from 'shared/ui/Icon/Icon';
+import { useInitialEffect } from 'shared/lib/hooks/useInitialEffect/useInitialEffect';
 import {
     getArticleDetailsData,
     getArticleDetailsError,
@@ -33,7 +34,6 @@ import cls from './ArticleDetails.module.scss';
 import ArticleCodeBlockComponent from '../ArticleCodeBlockComponent/ArticleCodeBlockComponent';
 import ArticleImageBlockComponent from '../ArticleImageBlockComponent/ArticleImageBlockComponent';
 import ArticleTextBlockComponent from '../ArticleTextBlockComponent/ArticleTextBlockComponent';
-import { useInitialEffect } from 'shared/lib/hooks/useInitialEffect/useInitialEffect';
 
 interface ArticleDetailsProps {
     className?: string;
@@ -55,33 +55,33 @@ export const ArticleDetails = memo((props: ArticleDetailsProps) => {
 
     const renderBlock = useCallback((block: ArticleBlock) => {
         switch (block.type) {
-            case ArticleBlockType.CODE:
-                return (
-                    <ArticleCodeBlockComponent
-                        key={block.id}
-                        className={cls.block}
-                        block={block}
-                    />
-                );
-            case ArticleBlockType.IMAGE:
-                return (
-                    <ArticleImageBlockComponent
-                        key={block.id}
-                        className={cls.block}
-                        block={block}
-                    />
-                );
-            case ArticleBlockType.TEXT:
-                return (
-                    <ArticleTextBlockComponent
-                        key={block.id}
-                        className={cls.block}
-                        block={block}
-                    />
-                );
+        case ArticleBlockType.CODE:
+            return (
+                <ArticleCodeBlockComponent
+                    key={block.id}
+                    className={cls.block}
+                    block={block}
+                />
+            );
+        case ArticleBlockType.IMAGE:
+            return (
+                <ArticleImageBlockComponent
+                    key={block.id}
+                    className={cls.block}
+                    block={block}
+                />
+            );
+        case ArticleBlockType.TEXT:
+            return (
+                <ArticleTextBlockComponent
+                    key={block.id}
+                    className={cls.block}
+                    block={block}
+                />
+            );
 
-            default:
-                return null;
+        default:
+            return null;
         }
     }, []);
 

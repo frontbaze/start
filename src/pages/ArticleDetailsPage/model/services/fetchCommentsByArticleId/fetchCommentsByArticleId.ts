@@ -24,7 +24,7 @@ export const fetchCommentsByArticleId = createAsyncThunk<
                         articleId,
                         _expand: 'user',
                     },
-                }
+                },
             );
 
             if (!response.data) {
@@ -35,5 +35,5 @@ export const fetchCommentsByArticleId = createAsyncThunk<
         } catch (e) {
             return rejectWithValue('error');
         }
-    }
+    },
 );

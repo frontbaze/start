@@ -1,6 +1,6 @@
 import { classNames } from 'shared/lib/classNames/classNames';
 import { useTranslation } from 'react-i18next';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { ArticleDetails } from 'entities/Article';
 import { useParams } from 'react-router-dom';
 import { CommentList } from 'entities/Comment';
@@ -9,7 +9,15 @@ import {
     DynamicModuleLoader,
     ReducersList,
 } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
+import { AddCommentForm } from 'features/addCommentForm';
 import { useDispatch, useSelector } from 'react-redux';
+import { useInitialEffect } from 'shared/lib/hooks/useInitialEffect/useInitialEffect';
+import {
+    fetchCommentsByArticleId,
+} from '../../model/services/fetchCommentsByArticleId/fetchCommentsByArticleId';
+import {
+    addCommentForArticle,
+} from '../../model/services/addCommentForArticle/addCommentForArticle';
 import {
     getArticleCommentsError,
     getArticleCommentsIsLoading,
@@ -19,8 +27,6 @@ import {
     getArticleComments,
 } from '../../model/slice/ArticleDetailsCommentsSlice';
 import cls from './ArticleDetailsPage.module.scss';
-import { useInitialEffect } from 'shared/lib/hooks/useInitialEffect/useInitialEffect';
-import { fetchCommentsByArticleId } from 'pages/ArticleDetailsPage/model/services/fetchCommentsByArticleId/fetchCommentsByArticleId';
 
 interface ArticleDetailsPageProps {
     className?: string;
@@ -38,10 +44,12 @@ const ArticleDetailsPage = (props: ArticleDetailsPageProps) => {
 
     const comments = useSelector(getArticleComments.selectAll);
 
-    const commentsIsLoading = useSelector(
-        getArticleCommentsIsLoading
-    );
+    const commentsIsLoading = useSelector(getArticleCommentsIsLoading);
     const commentsError = useSelector(getArticleCommentsError);
+
+    const onSendComment = useCallback((text: string) => {
+        dispatch(addCommentForArticle(text));
+    }, [dispatch]);
 
     useInitialEffect(() => {
         dispatch(fetchCommentsByArticleId(id));
@@ -50,9 +58,7 @@ const ArticleDetailsPage = (props: ArticleDetailsPageProps) => {
     if (!id) {
         return (
             <div
-                className={classNames(cls.ArticleDetailsPage, {}, [
-                    className,
-                ])}
+                className={classNames(cls.ArticleDetailsPage, {}, [className])}
             >
                 {t('Статья не найдена')}
             </div>
@@ -61,15 +67,11 @@ const ArticleDetailsPage = (props: ArticleDetailsPageProps) => {
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
             <div
-                className={classNames(cls.ArticleDetailsPage, {}, [
-                    className,
-                ])}
+                className={classNames(cls.ArticleDetailsPage, {}, [className])}
             >
                 <ArticleDetails id={id} />
-                <Text
-                    className={cls.commentTitle}
-                    title={t('Комментарии')}
-                />
+                <Text className={cls.commentTitle} title={t('Комментарии')} />
+                <AddCommentForm onSendComment={onSendComment} />
                 <CommentList
                     isLoading={commentsIsLoading}
                     comments={comments}
